@@ -9,10 +9,16 @@ export default class UsersController {
   }
 
   async create(req: Request, res: Response) {
-    const user = req.body;
+    try {
+      const user = req.body;
 
-    const [user_id] = await db("users").insert(user);
+      await db("users").insert(user);
 
-    return res.json(user_id);
+      return res.status(201).send();
+    } catch (error) {
+      return res.status(400).json({
+        error: "Unexpected error while creating new user",
+      });
+    }
   }
 }

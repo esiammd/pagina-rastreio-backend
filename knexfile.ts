@@ -1,17 +1,14 @@
 import path from "path";
 
 module.exports = {
-  client: "sqlite3",
+  client: "pg",
   connection: {
-    filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+    host: "localhost",
+    user: "pagina_rastreio",
+    password: "pagina_rastreio",
+    database: "pagina_rastreio",
   },
   migrations: {
     directory: path.resolve(__dirname, "src", "database", "migrations"),
-  },
-  useNullDefault: true,
-  pool: {
-    afterCreate: (conn: any, cb: any) => {
-      conn.run("PRAGMA foreign_keys = ON", cb); //habilita das foreign key no sqlite3
-    },
   },
 };

@@ -4,7 +4,9 @@ export async function up(knex: Knex) {
   return Promise.all([
     knex.schema
       .createTable("user_admin", (table) => {
-        table.string("username").notNullable().unique();
+        table.increments("id").primary();
+
+        table.string("username").notNullable();
         table.string("password").notNullable();
 
         table.timestamp("created_at").defaultTo(knex.fn.now());

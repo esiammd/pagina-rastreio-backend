@@ -1,6 +1,6 @@
 import argon2 from "argon2";
 
-const verifyPassword = async (passwordHash: string, password: string) => {
+async function verifyPassword(passwordHash: string, password: string) {
   try {
     if (await argon2.verify(passwordHash, password)) {
       return true;
@@ -8,8 +8,8 @@ const verifyPassword = async (passwordHash: string, password: string) => {
       return false;
     }
   } catch (error) {
-    return "Error function verifyPassword";
+    return error;
   }
-};
+}
 
 export default verifyPassword;

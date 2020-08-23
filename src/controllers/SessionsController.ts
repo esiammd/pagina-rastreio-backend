@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
-import db from "../database/connection";
+
 import verifyPassword from "../utils/verifyPassword";
 import generateToken from "../utils/generateToken";
+
+import db from "../database/connection";
 
 class SessionsController {
   async create(req: Request, res: Response) {
@@ -9,13 +11,11 @@ class SessionsController {
 
     const user_admin = await db("user_admin")
       .where("username", username)
-      .select("password")
+      .select("id", "password")
       .first();
 
     if (!user_admin || !(await verifyPassword(user_admin.password, password))) {
-      return res
-        .status(401)
-        .json({ message: "Incorrect username or password" });
+      return res.status(401).json({ error: "Incorrect username or password" });
     }
 
     return res

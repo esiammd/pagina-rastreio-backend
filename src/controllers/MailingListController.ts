@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import csvtojson from "../utils/csvtojson";
 import db from "../database/connection";
 
-class UploadsFileController {
+class MailingListController {
   async create(req: Request, res: Response) {
     const file = await csvtojson(req.file.filename);
 
@@ -24,14 +24,14 @@ class UploadsFileController {
             })
             .returning("id");
 
-          await trx("requests").insert({
+          await trx("mailings").insert({
             user_id,
             tracking_code: item.COD_RAST,
             product: item.NOME_PROD,
           });
         } else {
           await trx("users").where("id", user.id).update({ email: item.EMAIL });
-          await trx("requests").insert({
+          await trx("mailings").insert({
             user_id: user.id,
             tracking_code: item.COD_RAST,
             product: item.NOME_PROD,
@@ -50,4 +50,4 @@ class UploadsFileController {
   }
 }
 
-export default UploadsFileController;
+export default MailingListController;

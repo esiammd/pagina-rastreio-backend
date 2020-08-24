@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(routes);
 
 app.use(
-  "/uploads/file",
-  express.static(path.resolve(__dirname, "..", "uploads"))
+  "/tmp/uploads",
+  express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
 );
 
 app.listen(3333);

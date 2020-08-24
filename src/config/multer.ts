@@ -2,10 +2,9 @@ import multer from "multer";
 import path from "path";
 
 const storage = multer.diskStorage({
-  destination: path.resolve(__dirname, "..", "..", "uploads"),
+  destination: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
   filename: (req, file, cb) => {
-    const date = new Date().toISOString();
-    const fileName = `${date}-${file.originalname}`;
+    const fileName = "mailinglist.csv";
     cb(null, fileName);
   },
 });

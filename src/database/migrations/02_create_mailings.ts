@@ -1,7 +1,7 @@
 import Knex from "knex";
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable("requests", (table) => {
+  return knex.schema.createTable("mailings", (table) => {
     table.increments("id").primary();
 
     table.string("tracking_code").notNullable();
@@ -16,5 +16,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable("requests");
+  return knex.schema.dropTable("mailings");
 }

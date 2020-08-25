@@ -4,7 +4,7 @@ import db from "../database/connection";
 
 class MailingTracksController {
   async index(req: Request, res: Response) {
-    const { cpf } = req.body;
+    const { cpf } = req.query;
 
     const [userId] = await db("users").where("cpf", cpf).select("id");
 

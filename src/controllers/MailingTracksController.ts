@@ -6,7 +6,10 @@ class MailingTracksController {
   async index(req: Request, res: Response) {
     const { cpf } = req.query;
 
-    const [userId] = await db("users").where("cpf", cpf).select("id");
+    const userId = await db("users")
+      .where("cpf", String(cpf))
+      .select("id")
+      .first();
 
     if (!userId) {
       return res.status(404).json({ error: "CPF not found" });

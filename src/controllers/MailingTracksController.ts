@@ -9,7 +9,7 @@ class MailingTracksController {
     const [userId] = await db("users").where("cpf", cpf).select("id");
 
     if (!userId) {
-      return res.status(406).json({ error: "CPF not found" });
+      return res.status(404).json({ error: "CPF not found" });
     }
 
     const trackingCodes = (

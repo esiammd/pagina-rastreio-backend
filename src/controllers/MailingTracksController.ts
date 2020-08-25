@@ -21,11 +21,7 @@ class MailingTracksController {
       return item.tracking_code;
     });
 
-    const tracks = (await rastro.track(trackingCodes)).filter((item) => {
-      if (!item.error) {
-        return item;
-      }
-    });
+    const tracks = await rastro.track(trackingCodes);
 
     return res.status(200).json(tracks);
   }

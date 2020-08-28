@@ -25,6 +25,14 @@ class MailingTracksController {
 
     return res.status(200).json(tracks);
   }
+
+  async show(req: Request, res: Response) {
+    const { code } = req.params;
+
+    const [track] = await rastro.track(String(code));
+
+    return res.status(200).json(track.tracks);
+  }
 }
 
 export default MailingTracksController;

@@ -54,11 +54,13 @@ class MailingTracksController {
     const [track] = await rastro.track(String(code));
 
     const formatTrack = track.tracks?.map((item) => {
+      const locale = formatFirstUpperCase(item.locale);
+
       const observation =
         item.observation && formatFirstUpperCase(item.observation);
 
       return {
-        locale: formatFirstUpperCase(item.locale),
+        locale: formatCityState(item.locale),
         status: item.status.toUpperCase(),
         observation: formatCityState(observation),
         date: moment(item.trackedAt).format("DD/MM/YYYY"),

@@ -22,5 +22,6 @@ routes.post(
 );
 
 routes.get("/tracks", mailingTracksController.index);
+routes.get("/tracks/:code", mailingTracksController.show);
 
 export default routes;

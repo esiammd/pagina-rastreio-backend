@@ -39,6 +39,7 @@ class MailingTracksController {
         product: products.find((item) => item.code === track.code)?.product,
         status: current?.status,
         date: moment(current?.trackedAt).format("DD/MM/YYYY"),
+        hour: moment(current?.trackedAt).format("HH:mm"),
       };
     });
 

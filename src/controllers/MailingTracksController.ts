@@ -17,23 +17,32 @@ class MailingTracksController {
       return res.status(404).json({ error: "CPF not found" });
     }
 
-    const trackingCodes = (
-      await db("mailings").where("user_id", userId.id).select("tracking_code")
+    const products = (
+      await db("mailings")
+        .where("user_id", userId.id)
+        .select("tracking_code", "product")
     ).map((item) => {
-      return item.tracking_code;
+      return { code: item.tracking_code, product: item.product };
     });
+
+    const trackingCodes = products.map((item) => item.code);
 
     const tracks = await rastro.track(trackingCodes);
 
-    // const estadoAtual = tracks.map((track) => {
-    //   track.tracks?.map((item) => {
-    //     if (item.trackedAt === track.updatedAt) {
-    //       console.log(`Objeto: ${track.code} | Status: ${item.status}`);
-    //     }
-    //   });
-    // });
+    const response = tracks.map((track) => {
+      const current = track.tracks?.find(
+        (item) => item.trackedAt === track.updatedAt
+      );
 
-    return res.status(200).json({ user: userId.name, tracks });
+      return {
+        code: track.code,
+        product: products.find((item) => item.code === track.code)?.product,
+        status: current?.status,
+        date: moment(current?.trackedAt).format("DD/MM/YYYY"),
+      };
+    });
+
+    return res.status(200).json({ user: userId.name, tracks: response });
   }
 
   async show(req: Request, res: Response) {

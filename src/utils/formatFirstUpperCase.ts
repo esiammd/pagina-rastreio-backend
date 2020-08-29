@@ -8,10 +8,10 @@ function formatFirstUpperCase(text: string, separator = " ") {
         word !== "da" &&
         word !== "dos" &&
         word !== "das" &&
+        word !== "ao" &&
         word !== "em" &&
         word !== "com" &&
-        word !== "para" &&
-        word !== "/"
+        word !== "para"
       ) {
         return word[0].toUpperCase() + word.slice(1).toLowerCase();
       }

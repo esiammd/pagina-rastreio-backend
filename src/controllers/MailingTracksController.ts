@@ -70,7 +70,7 @@ class MailingTracksController {
         item.observation && formatFirstUpperCase(item.observation);
 
       return {
-        locale: formatCityState(item.locale),
+        locale: formatCityState(locale),
         status: item.status.toUpperCase(),
         observation: formatCityState(observation),
         date: moment(item.trackedAt).format("DD/MM/YYYY"),

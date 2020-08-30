@@ -49,13 +49,21 @@ class MailingTracksController {
   async show(req: Request, res: Response) {
     function formatCityState(text: string) {
       if (text !== null) {
-        const [city, state] = text.split("/");
+        const [city, state, state2] = text.split("/");
 
-        return (
+        const response =
           city.trimRight() +
           "/" +
-          (state.slice(0, 3).toUpperCase() + state.substr(3)).trimLeft()
-        );
+          (state.slice(0, 3).toUpperCase().trimLeft() + state.substr(3));
+
+        if (state2) {
+          return (
+            response.trimRight() +
+            "/" +
+            (state2.slice(0, 3).toUpperCase().trimLeft() + state2.substr(3))
+          );
+        }
+        return response;
       }
     }
 

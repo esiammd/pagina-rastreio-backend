@@ -1,17 +1,16 @@
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
 
 module.exports = {
-  client: "sqlite3",
+  client: "pg",
   connection: {
-    filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
   },
   migrations: {
     directory: path.resolve(__dirname, "src", "database", "migrations"),
-  },
-  useNullDefault: true,
-  pool: {
-    afterCreate: (conn: any, cb: any) => {
-      conn.run("PRAGMA foreign_keys = ON", cb); //habilita das foreign key no sqlite3
-    },
   },
 };

@@ -1,10 +1,27 @@
 import express from "express";
-import UsersController from "./controllers/UsersController";
+import SessionsController from "./controllers/SessionsController";
+import MailingListController from "./controllers/MailingListController";
+import MailingTracksController from "./controllers/MailingTracksController";
+
+import upload from "./config/multer";
+import authMiddleware from "./middlewares/auth";
 
 const routes = express.Router();
-const usersController = new UsersController();
 
-routes.get("/users", usersController.index);
-routes.post("/users", usersController.create);
+const sessionsController = new SessionsController();
+const mailingListController = new MailingListController();
+const mailingTracksController = new MailingTracksController();
+
+routes.post("/sessions", sessionsController.create);
+
+routes.post(
+  "/uploads",
+  upload.single("file"),
+  authMiddleware,
+  mailingListController.create
+);
+
+routes.get("/tracks", mailingTracksController.index);
+routes.get("/tracks/:code", mailingTracksController.show);
 
 export default routes;
